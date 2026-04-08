@@ -96,6 +96,7 @@ class CalculatorTest {
     void testSubstrraktion() {
         Calculator calc = new Calculator();
 
+
         calc.pressDigitKey(9);
         calc.pressBinaryOperationKey("-");
         calc.pressDigitKey(5);
