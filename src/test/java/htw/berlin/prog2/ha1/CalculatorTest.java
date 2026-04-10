@@ -116,10 +116,26 @@ class CalculatorTest {
         calc.pressDigitKey(5);
         calc.pressBinaryOperationKey("+");
         calc.pressDigitKey(3);
-        calc.pressEqualsKey();
-        calc.pressDigitKey(4);
+        calc.pressEqualsKey();  // screen = "8"
+        calc.pressDigitKey(4);  // sollte screen auf "4" setzen, nicht "84"
 
         String expected = "4";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+    @Test
+    @DisplayName("should repeat last operation with last operand when pressing equals multiple times")
+    void testRepeatedEquals() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(2);
+        calc.pressBinaryOperationKey("+");
+        calc.pressDigitKey(3);
+        calc.pressEqualsKey();  // 2 + 3 = 5
+        calc.pressEqualsKey();  // 5 + 3 = 8 (letzte Operation wiederholen)
+
+        String expected = "8";
         String actual = calc.readScreen();
 
         assertEquals(expected, actual);
