@@ -18,11 +18,14 @@ public class Calculator {
 
     private boolean operationPressed = false;
 
+    private double lastOperand = 0;
+
     /**
      * @return den aktuellen Bildschirminhalt als String
      */
     public String readScreen() {
         return screen;
+
     }
 
     /**
@@ -128,11 +131,15 @@ public class Calculator {
      * und das Ergebnis direkt angezeigt.
      */
     public void pressEqualsKey() {
+        if(!resultShown) {
+            lastOperand = Double.parseDouble(screen);
+        }
+
         var result = switch(latestOperation) {
-            case "+" -> latestValue + Double.parseDouble(screen);
-            case "-" -> latestValue - Double.parseDouble(screen);
-            case "x" -> latestValue * Double.parseDouble(screen);
-            case "/" -> latestValue / Double.parseDouble(screen);
+            case "+" -> latestValue + lastOperand;
+            case "-" -> latestValue - lastOperand;
+            case "x" -> latestValue * lastOperand;
+            case "/" -> latestValue / lastOperand;
             default -> throw new IllegalArgumentException();
         };
         screen = Double.toString(result);
@@ -140,6 +147,8 @@ public class Calculator {
         if(screen.endsWith(".0")) screen = screen.substring(0,screen.length()-2);
         if(screen.contains(".") && screen.length() > 11) screen = screen.substring(0, 10);
 
+        latestValue = result;
         resultShown = true;
     }
+
 }
