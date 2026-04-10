@@ -108,5 +108,27 @@ class CalculatorTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    @DisplayName("should start new number input after pressing equals, not append to result")
+    void testDigitInputAfterEquals() {
+        Calculator calc = new Calculator();
+
+        calc.pressDigitKey(5);
+        calc.pressBinaryOperationKey("+");
+        calc.pressDigitKey(3);
+        calc.pressEqualsKey();
+        calc.pressDigitKey(4);
+
+        String expected = "4";
+        String actual = calc.readScreen();
+
+        assertEquals(expected, actual);
+    }
+
+
+
+
+
+
 }
 
